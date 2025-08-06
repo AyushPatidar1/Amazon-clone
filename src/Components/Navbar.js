@@ -9,17 +9,12 @@ import Default from "../imgs/default.png";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
-import { app } from "../Firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import swal from "sweetalert";
-
-const auth = getAuth(app);
 
 function Navbar() {
   const CartItems = useSelector((state) => state.CartItemsAdded.CartItems);
   const ListItems = useSelector((state) => state.ItemsAdded.ListItems);
   const OrderItems = useSelector((state) => state.OrderAdded.OrderItems);
-  const [user, setUser] = useState(null);
   const [searchText, setSearchText] = useState("");
   const [Products, setProducts] = useState([]);
 
@@ -37,14 +32,6 @@ function Navbar() {
   }, 0);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-
     const GetProducts = async () => {
       const data = await fetch("https://fakestoreapi.com/products");
       const new_data = await data.json();
@@ -233,11 +220,7 @@ function Navbar() {
 
           <img
             onClick={() => navigate("/account")}
-            src={
-              user && user.photoURL
-                ? user.photoURL.replace(/^http:\/\//i, "https://") //replaces the http with https
-                : Default
-            }
+            src={Default}
             className="default"
           />
         </div>

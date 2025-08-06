@@ -1,83 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./profile.css";
-import { app } from "../Firebase";
 import Default from "../imgs/default.png";
 import USER from "../imgs/user.png";
 import contact from "../imgs/contact.png";
 import LowerNav from "./LowerNav";
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
-const auth = getAuth(app);
-
 function Profile() {
-  const [user, setUser] = useState(null);
-  const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   document.title = "Profile section"
 
-  const checkDP = () => {
-    if (user && user.photoURL && user.photoURL.includes("https")) {
-      setImage(user.photoURL);
-    } else if (user && user.photoURL && user.photoURL.includes("http")) {
-      const newImage = user.photoURL.replace(/^http:\/\//i, "https://");
-      setImage(newImage);
-    } else {
-      setImage(Default);
-    }
+  // Static user data for demo
+  const userData = {
+    displayName: "Guest User",
+    email: "guest@amazon.com"
   };
-
-  useEffect(() => {
-    checkDP();
-  }, [user]);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-  }, []);
 
   return (
     <>
       <Navbar />
-      <div
-        style={user ? { height: "fit-content" } : { height: "70vh" }}
-        className="profile-section"
-      >
-        <div className={user ? `account-section animate` : `account-section`}>
+      <div className="profile-section">
+        <div className="account-section animate">
           <div className="top-section">
             <p className="welcome-mssg">
-              {user ? `Welcome, ${user.displayName}` : ""}
+              Welcome, {userData.displayName}
             </p>
           </div>
           <div className="account-section2">
             <div className="left-account-section">
-              <img src={image} className="profile-img" />
+              <img src={Default} className="profile-img" />
               <p className="profile-name">
-                {user ? `${user.displayName}` : ""}
+                {userData.displayName}
               </p>
-              <p className="profile-email">{user ? `${user.email}` : ""}</p>
+              <p className="profile-email">{userData.email}</p>
               <button
                 onClick={() => {
-                  signOut(auth);
-                  setTimeout(() => {
-                    navigate("/signup"); 
-                  }, 700);
+                  navigate("/home"); 
                 }}
                 className="signout-btn"
               >
-                Sign out
+                Go to Home
               </button>
             </div>
             <div className="right-account-section">
@@ -93,7 +58,7 @@ function Profile() {
                     <img src={USER} className="user-photo" />
                   </div>
                   <p className="users-name">
-                    {user ? `${user.displayName}` : ""}
+                    {userData.displayName}
                   </p>
                 </div>
                 <div className="personal-mail">
@@ -101,7 +66,7 @@ function Profile() {
                     <p className="mail-data">Contact</p>
                     <img src={contact} className="mail-photo" />
                   </div>
-                  <p className="users-mail">{user ? `${user.email.slice(0,15) + "..."}` : ""}</p>
+                  <p className="users-mail">{userData.email}</p>
                 </div>
               </div>
             </div>

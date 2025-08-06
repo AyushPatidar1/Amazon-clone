@@ -2,14 +2,11 @@ import { React, useEffect, useState, useRef } from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import "./payment.css";
-import { app } from "../Firebase";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import VanillaTilt from "vanilla-tilt";
 import chip from "../imgs/chip.png";
 import american from "../imgs/american.png";
 import visa from "../imgs/visa2.png";
 import master from "../imgs/master.png";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { AddOrder } from "../action/Orders";
 import { useSelector, useDispatch } from "react-redux";
 import swal from "sweetalert";
@@ -18,11 +15,14 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const auth = getAuth(app);
-const db = getFirestore(app);
-
 function Payment() {
-  const [user, setUser] = useState([]);
+  // Static user data for demo
+  const userData = {
+    displayName: "Ayush Patidar",
+    email: "ayushpatidar@demo.com",
+    uid: "demo_user_123"
+  };
+
   const [Country, setCountry] = useState("");
   const [Name, setName] = useState("");
   const [Number, setNumber] = useState(null);
@@ -176,15 +176,6 @@ function Payment() {
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-      }
-    });
-  }, []);
-
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -235,7 +226,8 @@ function Payment() {
 
   const AddUserData = async () => {
     try {
-      await addDoc(collection(db, "Users"), {
+      // Simulate order placement without Firebase
+      console.log("Order placed successfully:", {
         name: Name,
         mail: Email,
         number: Number,
@@ -248,8 +240,10 @@ function Payment() {
         order: CartItems,
         transaction_time: currentDateTime,
       });
+      return true; // Simulate successful order placement
     } catch (e) {
       console.error(e);
+      return false;
     }
   };
 
