@@ -95,8 +95,8 @@ function Jewelery() {
                     </div>
                   </div>
                   <div className="card-price">
-                    <p className="discount">${items.price}</p>
-                    <p className="mrp">${Math.round(items.price * 1.66)}</p>
+                    <p className="discount">₹{Math.round(items.price * 83)}</p>
+                    <p className="mrp">₹{Math.round(items.price * 1.66 * 83)}</p>
                   </div>
                 </div>
               </div>

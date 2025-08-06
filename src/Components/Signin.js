@@ -5,16 +5,15 @@ import BG1 from "../imgs/login-BG.png";
 import BG2 from "../imgs/login-BG2.png";
 import google from "../imgs/google.png";
 import { Link, useNavigate } from "react-router-dom";
-import { app } from "../Firebase";
+import { auth } from "../Firebase";
 import {
-  getAuth,
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  sendEmailVerification,
 } from "firebase/auth";
 import swal from "sweetalert";
 
-const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 function Signin() {
@@ -59,7 +58,40 @@ function Signin() {
 
   const LogInUser = async () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {})
+      .then((userCredential) => {
+        const user = userCredential.user;
+        if (user.emailVerified) {
+          navigate("/home");
+          swal({
+            title: "Success!",
+            text: "Login successful!",
+            icon: "success",
+            buttons: "Ok",
+          });
+        } else {
+          swal({
+            title: "Email Not Verified!",
+            text: "Please verify your email before logging in. Check your inbox for verification email.",
+            icon: "warning",
+            buttons: {
+              cancel: "Ok",
+              confirm: "Resend Verification Email"
+            },
+          }).then((willResend) => {
+            if (willResend) {
+              sendEmailVerification(user).then(() => {
+                swal({
+                  title: "Email Sent!",
+                  text: "Verification email has been sent. Please check your inbox.",
+                  icon: "success",
+                  buttons: "Ok",
+                });
+              });
+            }
+          });
+          auth.signOut(); // Sign out unverified user
+        }
+      })
       .catch((error) => {
         swal({
           title: "Error!",

@@ -177,8 +177,8 @@ function ProductPage() {
             {product ? (
               <div className="product-actual-price">
                 <p className="price-one">Price:</p>
-                <p className="price-two">${product.price}</p>
-                <p className="mrp">${Math.round(product.price * 1.66)}</p>
+                <p className="price-two">₹{Math.round(product.price * 83)}</p>
+                <p className="mrp">₹{Math.round(product.price * 1.66 * 83)}</p>
               </div>
             ) : (
               ""

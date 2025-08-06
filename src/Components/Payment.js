@@ -642,7 +642,7 @@ function Payment() {
               <div className="paying-data"></div>
               <div className="total-amount">
                 <p className="subtotal-amount">Total Amount :</p>
-                <p className="main-amount">${TotalAmount}</p>
+                <p className="main-amount">₹{Math.round(TotalAmount * 83)}</p>
               </div>
               <div className="order-place-btn">
                 <button

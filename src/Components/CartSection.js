@@ -116,7 +116,7 @@ function CartSection() {
                       <p className="cart-title">{item.title}</p>
                       <div className="cart-price">
                         <p className="cart-discount">
-                          ${(item.price * item.quantity).toFixed(1)}
+                          ₹{(item.price * item.quantity * 83).toFixed(0)}
                         </p>
                         <p
                           style={
@@ -192,7 +192,7 @@ function CartSection() {
               <p>
                 Congrats! You're eligible for <b>Free Delivery</b>.
                 <p style={{ marginTop: "5px", marginBottom: "0px" }}>
-                  Use code <b>SHUBHO20</b> for 20% discount.
+                  Use code <b>AYUSH020</b> for 20% discount.
                 </p>
               </p>
             </div>
@@ -206,11 +206,11 @@ function CartSection() {
               />
               <button
                 onClick={() => {
-                  if (promocode === "SHUBHO20") {
+                  if (promocode === "AYUSH020") {
                     TotalValue(totalPrice1);
                     setdiscountCode(promocode);
                     setCorrectCode(true);
-                  } else if (promocode !== "SHUBHO20") {
+                  } else if (promocode !== "AYUSH020") {
                     setdiscountCode(promocode);
                     TotalValue(totalPrice2);
                     setCorrectCode(false);
@@ -229,7 +229,7 @@ function CartSection() {
               }
               className="applied"
             >
-              <b>SHUBHO20</b> has been applied!
+              <b>AYUSH020</b> has been applied!
             </p>
             <p
               style={
@@ -246,7 +246,7 @@ function CartSection() {
             <div className="money-data">
               <div className="money-1">
                 <p className="total">Sub-Total</p>
-                <p className="total-price">${SubTotal.toFixed(2)}</p>
+                <p className="total-price">₹{(SubTotal * 83).toFixed(0)}</p>
               </div>
               <div
                 style={
@@ -257,15 +257,15 @@ function CartSection() {
                 className="money-2"
               >
                 <p className="item-discount">Discount</p>
-                <p className="item-discount2">(20%) - ${DiscountPrice}</p>
+                <p className="item-discount2">(20%) - ₹{(DiscountPrice * 83).toFixed(0)}</p>
               </div>
               <div className="money-3">
                 <p className="item-delivery">Delivery</p>
-                <p className="item-delivery2">$0.00</p>
+                <p className="item-delivery2">₹0.00</p>
               </div>
               <div className="money-4">
                 <p className="item-tax">Tax</p>
-                <p className="item-tax2">(5%) + ${TaxPrice}</p>
+                <p className="item-tax2">(5%) + ₹{(TaxPrice * 83).toFixed(0)}</p>
               </div>
             </div>
             <hr className="horizontal" />
@@ -279,7 +279,7 @@ function CartSection() {
                 }
                 className="total-price"
               >
-                ${totalPrice1}
+                ₹{(totalPrice1 * 83).toFixed(0)}
               </p>
               <p
                 style={
@@ -289,7 +289,7 @@ function CartSection() {
                 }
                 className="total-price2"
               >
-                ${totalPrice2}
+                ₹{(totalPrice2 * 83).toFixed(0)}
               </p>
             </div>
             <div className="payment-btn">

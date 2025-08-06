@@ -4,20 +4,19 @@ import Logo from "../imgs/logo2.png";
 import BG1 from "../imgs/login-BG.png";
 import BG2 from "../imgs/login-BG2.png";
 import google from "../imgs/google.png";
-import { app } from "../Firebase";
+import { auth } from "../Firebase";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  sendEmailVerification,
 } from "firebase/auth";
 import swal from "sweetalert";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
 function Signup() {
@@ -96,7 +95,22 @@ function Signup() {
       await updateProfile(user, {
         displayName: name,
       });
-      navigate("/home");
+      
+      // Send email verification
+      await sendEmailVerification(user);
+      
+      // Sign out the user until they verify their email
+      await auth.signOut();
+      
+      swal({
+        title: "Account Created!",
+        text: "Please check your email and verify your account before logging in.",
+        icon: "success",
+        buttons: "Ok",
+      }).then(() => {
+        navigate("/signin");
+      });
+      
     } catch (error) {
       swal({
         title: "Error!",

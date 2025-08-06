@@ -73,13 +73,13 @@ function Footer() {
         <div className="developer">
           <img src={Logo} className="amazon-img" />
           <div className="dev-data">
-            <p>&copy; 2023 | Developed by </p>
+            <p>&copy; 2025 | Developed by </p>
             <a
               className="dev-link"
-              href="https://github.com/shubho0908"
+              href="https://github.com/AyushPatidar1"
               target="_blank"
             >
-              Shubhojeet Bera
+              Ayush Patidar
             </a>
           </div>
         </div>
